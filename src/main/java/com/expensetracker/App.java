@@ -1,11 +1,14 @@
 package com.expensetracker;
 
+import com.expensetracker.controller.ExpenseController;
+
 /**
  * Hello world!
  *
  */
 public class App {
   public static void main(String[] args) {
-    System.out.println("Hello World!");
+    ExpenseController controller = new ExpenseController();
+    controller.display();
   }
 }
