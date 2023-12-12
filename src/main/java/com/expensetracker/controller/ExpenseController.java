@@ -1,5 +1,6 @@
 package com.expensetracker.controller;
 
+import com.expensetracker.util.InputValidator;
 import com.expensetracker.view.MainView;
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ public class ExpenseController {
   public void display() {
     MainView.enterUser();
     int option = scanner.nextInt();
+    InputValidator.validString("string");
   }
 
   public static void processOption(int option) {
