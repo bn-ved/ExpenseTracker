@@ -1,6 +1,7 @@
 package com.expensetracker.controller;
 
 import com.expensetracker.util.InputValidator;
+import com.expensetracker.util.PasswordHasher;
 import com.expensetracker.view.MainView;
 import java.util.Scanner;
 
@@ -13,10 +14,17 @@ public class ExpenseController {
 
   public void display() {
     MainView.enterUser();
-    int option = scanner.nextInt();
-    InputValidator.validString("string");
+    String option = scanner.nextLine();
+    boolean isValidUserName = InputValidator.validString(option);
+    validateUser(isValidUserName);
   }
 
+  /**
+   * This method is responsible for performing certain
+   * operaions based on the input option.
+   *
+   * @param option takes a option input to process.
+   */
   public static void processOption(int option) {
 
     switch (option) {
@@ -30,6 +38,23 @@ public class ExpenseController {
         break;
       default:
         System.out.println("❌ Wrong Input Type");
+    }
+  }
+
+  /**
+   * If the username is a valid username then this method checks if the
+   * user is a existing user or a new user.
+   *
+   * @param isValidUserName a boolean value for a valid or invalid user.
+   */
+  public static void validateUser(boolean isValidUserName) {
+    // TODO: check if the user is an existing user of new user
+    if (isValidUserName) {
+      String password = "hello";
+      String hashedPassword = PasswordHasher.hashPassword(password);
+      System.out.println(hashedPassword);
+    } else {
+      System.out.println("This is user is invalid");
     }
   }
 }
