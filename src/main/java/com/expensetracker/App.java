@@ -1,6 +1,9 @@
 package com.expensetracker;
 
 import com.expensetracker.controller.ExpenseController;
+import com.expensetracker.database.DatabaseManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Hello world!
@@ -8,7 +11,13 @@ import com.expensetracker.controller.ExpenseController;
  */
 public class App {
   public static void main(String[] args) {
-    ExpenseController controller = new ExpenseController();
-    controller.display();
+    try {
+      Connection connection = DatabaseManager.connect();
+      ExpenseController controller = new ExpenseController(connection);
+      controller.display();
+      DatabaseManager.disconnect(connection);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }

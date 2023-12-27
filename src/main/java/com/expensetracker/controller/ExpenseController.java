@@ -1,8 +1,11 @@
 package com.expensetracker.controller;
 
+import com.expensetracker.database.DatabaseManager;
 import com.expensetracker.util.InputValidator;
-import com.expensetracker.util.PasswordHasher;
+import com.expensetracker.util.PasswordUtil;
 import com.expensetracker.view.MainView;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -11,6 +14,21 @@ import java.util.Scanner;
  */
 public class ExpenseController {
   private Scanner scanner = new Scanner(System.in);
+  private final Connection connection;
+
+  public ExpenseController(Connection connection) {
+    this.connection = connection;
+    initializeDatabase();
+  }
+
+  private void initializeDatabase() {
+    try {
+      DatabaseManager.initializeDatabase(connection);
+      DatabaseManager.createExpensesTable(connection);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 
   public void display() {
     MainView.enterUser();
@@ -51,7 +69,7 @@ public class ExpenseController {
     // TODO: check if the user is an existing user of new user
     if (isValidUserName) {
       String password = "hello";
-      String hashedPassword = PasswordHasher.hashPassword(password);
+      String hashedPassword = PasswordUtil.hashPassword(password);
       System.out.println(hashedPassword);
     } else {
       System.out.println("This is user is invalid");
